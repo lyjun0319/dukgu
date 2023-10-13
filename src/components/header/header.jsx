@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {Link, NavLink} from "react-router-dom";
-import {login, logout, onUserStateChange} from "../../libs/firebase/firebase";
 import User from "./user";
+import {useAuth} from "../../common/auth";
 
 
 const Header = () => {
-  const [user, setUser] = useState();
+  const { user, status, login, logout } = useAuth();
 
-  useEffect(()=>{
-    onUserStateChange(setUser);
-  }, []);
+  console.log("===================");
+  console.log(status);
+  console.log("===================")
+  console.log(user);
+  if(status === "loading") return false;
 
   return (
     <header id="header">
@@ -18,7 +20,7 @@ const Header = () => {
       <nav id="nav">
         <NavLink to="/my" className="nav-list">Intro</NavLink>
         <NavLink to="/portfolio" className="nav-list">PortFolio</NavLink>
-        {user && <User user={user} />}
+        {user && <User user={user} logout={logout} />}
         {!user && <button type="button" className="btn-login" onClick={login}>Login</button> }
       </nav>
     </header>

@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getDatabase, ref, get } from "firebase/database";
 import {apiKey, authDomain, projectId,databaseURL,appId} from "../../common/constant";
 import {
   getAuth,
@@ -8,7 +9,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import {getDatabase} from "@firebase/database";
+
 
 const firebaseConfig = {
   apiKey,
@@ -35,11 +36,20 @@ export function logout(){
 }
 
 export function onUserStateChange(callback){
-  onAuthStateChanged(auth, (user) => {
-    callback(user);
+  onAuthStateChanged(auth, async (user) => {
+    const updateUser = user ? await adminUser(user) : user;
+    callback(updateUser);
   });
 }
 
-export function databaseCall(){
-  console.log(database);
+async function adminUser(user){
+  return get(ref(database, 'admins'))
+    .then((snapshot)=>{
+      if(snapshot.exists()){
+        const admins = snapshot.val();
+        const isAdmin = admins.includes(user.uid);
+        return { ...user, isAdmin }
+      }
+      return user;
+  })
 }

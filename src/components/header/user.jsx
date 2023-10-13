@@ -1,9 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {databaseCall, logout} from "../../libs/firebase/firebase";
+import React, {useState} from 'react';
 
-const User = ({user : {photoURL, displayName}}) => {
+const User = ({user : {photoURL, displayName}, logout}) => {
 
   const [useToggle, setToggle] = useState(false);
+
+  const handelLogout = async () => {
+    await logout()
+    window.location.reload();
+  }
 
   const handelToggle = ()=> {
     if(!useToggle){
@@ -13,10 +17,6 @@ const User = ({user : {photoURL, displayName}}) => {
     }
   }
 
-  useEffect(()=>{
-    console.log(databaseCall)
-  },[])
-
   return (
     <div className="user-info">
       <button type="button" className="user-profile" onClick={handelToggle}>
@@ -25,7 +25,7 @@ const User = ({user : {photoURL, displayName}}) => {
       </button>
 
       {useToggle && <div className="user-toggle">
-        <button type="button" className="logout" onClick={logout}>Logout</button>
+        <button type="button" className="logout" onClick={handelLogout}>Logout</button>
       </div>}
 
     </div>

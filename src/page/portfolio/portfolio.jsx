@@ -1,11 +1,23 @@
 import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
+import {useAuth} from "../../common/auth";
 
 const Portfolio = () => {
+
+  const {user, status} = useAuth();
   const navigation = useNavigate();
+
+  if(status === "loading") return false;
   const writeBtn = () =>{
-    navigation("/portfolioWrite");
+    const { isAdmin } = user;
+    if(!isAdmin) {
+      return alert("글쓰기 권한이 없습니다.");
+    }
+
+    navigation("/portfolioWrite")
   };
+
+
 
   return (
     <div className="portfolio-wrap">

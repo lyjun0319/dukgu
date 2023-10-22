@@ -28,8 +28,7 @@ const database = getDatabase(app);
 
 async function fetchUser() {
   return new Promise((resolve) => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      unsubscribe();
+    onAuthStateChanged(auth, async (user) => {
       const updateUser = user ? await adminUser(user) : user;
       resolve(updateUser);
     });

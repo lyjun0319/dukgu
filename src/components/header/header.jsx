@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Link, NavLink} from "react-router-dom";
 import User from "./user";
 import {useAuth} from "../../common/auth";
@@ -7,10 +7,6 @@ import {useAuth} from "../../common/auth";
 const Header = () => {
   const { user, status, login, logout } = useAuth();
 
-  console.log("===================");
-  console.log(status);
-  console.log("===================")
-  console.log(user);
   if(status === "loading") return false;
 
   return (

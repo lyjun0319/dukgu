@@ -10,17 +10,29 @@
     padding:10px 0;
   }
 
-  label {
+  label, .label-tt {
     display:block;
     padding-bottom:10px;
     font-size:14px;
     color:#fff;
   }
+
   input {
     font-size:14px;
     color:#fff;
     border:1px solid #222;
     outline:none;
+  }
+
+  .thumb-box {
+    width:100%;
+    height:100px;
+    background:#333 url("../images/icon/icon_plus.svg") no-repeat center center;
+    background-size: 30px 30px;
+  }
+
+  .input-file {
+    display: none;
   }
 
   .btn-box {

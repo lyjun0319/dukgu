@@ -1,7 +1,61 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
+import { bucket, region} from "../../libs/aws/awsSetting";
+import AWS, { S3 } from "aws-sdk";
+import {accessKeyId, secretAccessKey} from "../../common/constant";
+import {writePortfolio} from "../../libs/firebase/firebase";
 
 
 const PortfolioWrite = () => {
+  const [products, setProducts] = useState({});
+  const thumbRef = useRef(null);
+
+  const handelChange = e =>{
+    const {name, type, value, files} = e.target;
+
+
+    if(type === "file"){
+      const file = files[0];
+      const s3 = new AWS.S3({
+        accessKeyId,
+        secretAccessKey,
+        region,
+      });
+
+      const params = {
+        Bucket: bucket,
+        Key: file.name,
+        Body: file,
+        ACL: 'public-read', // 설정에 따라 이미지를 공개로 설정할 수 있습니다.
+      };
+
+      s3.upload(params, (err, data)=>{
+        if(err){
+          console.error(err)
+        }else{
+          setProducts({
+            ...products,
+            thumb:data.Location
+          });
+        }
+      })
+      return false;
+    }
+
+    setProducts({
+      ...products,
+      [name] : value,
+    })
+  }
+
+  const handelSubmit = () => {
+    writePortfolio(products)
+      .then(()=>{
+        alert("제품이 등록되 었습니다.");
+        window.location.reload();
+      });
+  }
+
+
   return (
     <div className="write-box">
       <form action="">
@@ -10,9 +64,11 @@ const PortfolioWrite = () => {
             <label htmlFor="name">프로잭트 명</label>
             <input
               type="text"
-              name="project-name"
+              name="name"
               id="name"
+              value={products.name ?? ""}
               placeholder="프로젝트 이름"
+              onChange={handelChange}
             />
           </li>
           <li>
@@ -20,43 +76,74 @@ const PortfolioWrite = () => {
             <input
               type="text"
               id="day"
-              name='project-day'
-              placeholder="프로젝트 기간"
+              name='day'
+              value={products.day ?? ""}
+              placeholder="YYMMDD - YYMMDD"
+              onChange={handelChange}
             />
           </li>
           <li>
-            <label htmlFor="thumb">프로잭트 썸네일</label>
+            <p className="label-tt">프로잭트 썸네일</p>
+            <label className={products?.thumb ? "thumb" : "thumb-box"} htmlFor="thumb" >
+              {products?.thumb && <img src={products.thumb} alt=""/>}
+            </label>
             <input
               type="file"
               id="thumb"
-              name='project-day'
-              multiple={true}
+              name='thumb'
+              ref={thumbRef}
               placeholder="프로젝트 썸네일"
+              onChange={handelChange}
+              className="input-file"
             />
           </li>
           <li>
             <label htmlFor="link">프로잭트 URL</label>
-
-              <input
-                type="text"
-                name="project-link"
-                id="link"
-                placeholder="프로젝트 URL"
-              />
-
+            <input
+              type="text"
+              name="link"
+              value={products.link ?? ""}
+              id="link"
+              placeholder="프로젝트 URL"
+              onChange={handelChange}
+            />
           </li>
           <li>
-            <label htmlFor="sub">프로잭트 소개</label>
+            <label htmlFor="company">회사</label>
+            <input
+              type="text"
+              name="company"
+              id="company"
+              value={products.company ?? ""}
+              placeholder="회사"
+              onChange={handelChange}
+            />
+          </li>
+          <li>
+            <label htmlFor="skill">사용한 스킬</label>
+            <input
+              type="text"
+              name="skill"
+              id="skill"
+              value={products.skill ?? ""}
+              placeholder="프로젝트에 사용한 스킬"
+              onChange={handelChange}
+            />
+          </li>
+          <li>
+            <label htmlFor="desc">프로잭트 소개</label>
             <textarea
-              name="project-info"
-              id=""
+              name="desc"
+              id="desc"
+              value={products.desc ?? ""}
+              onChange={handelChange}
             >
             </textarea>
           </li>
         </ul>
       </form>
       <div className="btn-box">
-        <button type="button" className="btn-save">저장</button>
+        <button type="button" className="btn-save" onClick={handelSubmit}>저장</button>
       </div>
     </div>
   );

@@ -1,14 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, get } from "firebase/database";
+import {get, getDatabase, ref, set} from "firebase/database";
 import {apiKey, authDomain, projectId,databaseURL,appId} from "../../common/constant";
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
+import {v4 as uuid} from "uuid";
 
 
 const firebaseConfig = {
@@ -20,36 +13,24 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
 const database = getDatabase(app);
 
+export async function writePortfolio(products) {
+  const id = uuid();
 
-
-export  function login(){
-  signInWithPopup(auth, provider).catch(console.error);
-}
-
-export function logout(){
-  signOut(auth).catch(console.error);
-}
-
-export function onUserStateChange(callback){
-  onAuthStateChanged(auth, async (user) => {
-    const updateUser = user ? await adminUser(user) : user;
-    callback(updateUser);
+  await set(ref(database, `portfolio/${id}`), {
+    id,
+    ...products,
   });
 }
 
-async function adminUser(user){
-  return get(ref(database, 'admins'))
-    .then((snapshot)=>{
+export async function getPortfolio(){
+  return get(ref(database, "portfolio"))
+    .then(snapshot => {
+
       if(snapshot.exists()){
-        const admins = snapshot.val();
-        const isAdmin = admins.includes(user.uid);
-        return { ...user, isAdmin }
+        return Object.values(snapshot.val());
       }
-      return user;
-  })
+      return [];
+    })
 }

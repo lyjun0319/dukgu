@@ -9,6 +9,8 @@ import Portfolio from "./page/portfolio/portfolio";
 import Main from "./page/main";
 import My from "./page/my/my";
 import PortfolioWrite from "./page/portfolio/portfolio.write";
+import isAdmin from "./components/auth/isAdmin";
+import IsAdmin from "./components/auth/isAdmin";
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -34,7 +36,10 @@ const router = createBrowserRouter([{
     },
     {
       path: "/portfolioWrite",
-      element: <PortfolioWrite />,
+      element:
+        <IsAdmin>
+          <PortfolioWrite />
+        </IsAdmin>,
       errorElement: "",
     }
   ]

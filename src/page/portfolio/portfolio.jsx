@@ -17,7 +17,6 @@ const Portfolio = () => {
     if(!isAdmin) {
       return alert("글쓰기 권한이 없습니다.");
     }
-
     navigation("/portfolioWrite");
   };
 

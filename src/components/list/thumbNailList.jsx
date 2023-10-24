@@ -1,22 +1,36 @@
 import React from 'react';
+import {useNavigate} from "react-router-dom";
 
 const ThumbNailList = ({data}) => {
 
-  const handelClick = (link)=>{
-    window.open(`http://www.${link}`, "_blank");
+  const navigate = useNavigate();
+  const handelClick = (id, data)=>{
+    navigate(`/portfolio/${id}`,{ state : { data } });
   }
+
+  const skills = (skill)=>{
+    return skill.map((item)=>{
+       return <span key={item} className="skill-item">#{item}</span>
+    })
+  }
+
+
   return (
-    data.map(({id, thumb, name, day, desc, link})=>{
-      console.log(thumb);
-      return  <li key={id} onClick={()=>handelClick(link)}>
+    data.map((item)=>{
+      const {id, thumb, name, day, skill} = item;
+      return  <li key={id} onClick={()=>handelClick(id, item)}>
         <div className="img-thumbnail">
           <img src={thumb} alt="" />
         </div>
-        <p className="prj-name">{name}</p>
-        <p className="prj-day">{day}</p>
+        <div className="prj-info">
+          <div className="prj-info-hd">
+            <p className="name">{name}</p>
+            <p className="day">{day}</p>
+          </div>
+          <div className="skill">{skills(skill)}</div>
+        </div>
       </li>
     })
-
   );
 };
 

@@ -41,6 +41,17 @@ const PortfolioWrite = () => {
       return false;
     }
 
+    if(name === "skill"){
+      const valueSplit = value.split(', ');
+
+      setProducts({
+        ...products,
+        [name] : valueSplit,
+      })
+
+      return false;
+    }
+
     setProducts({
       ...products,
       [name] : value,
@@ -54,7 +65,6 @@ const PortfolioWrite = () => {
         window.location.reload();
       });
   }
-
 
   return (
     <div className="write-box">
@@ -78,7 +88,7 @@ const PortfolioWrite = () => {
               id="day"
               name='day'
               value={products.day ?? ""}
-              placeholder="YYMMDD - YYMMDD"
+              placeholder="YYYYMM - YYYYMM"
               onChange={handelChange}
             />
           </li>
@@ -136,6 +146,16 @@ const PortfolioWrite = () => {
               name="desc"
               id="desc"
               value={products.desc ?? ""}
+              onChange={handelChange}
+            >
+            </textarea>
+          </li>
+          <li>
+            <label htmlFor="work">프로잭트 담당</label>
+            <textarea
+              name="work"
+              id="work"
+              value={products.work ?? ""}
               onChange={handelChange}
             >
             </textarea>

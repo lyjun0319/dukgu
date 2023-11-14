@@ -2,11 +2,14 @@ import React, {useRef, useState} from 'react';
 import { bucket, region} from "../../libs/aws/awsSetting";
 import AWS, { S3 } from "aws-sdk";
 import {accessKeyId, secretAccessKey} from "../../common/constant";
-import {writePortfolio} from "../../libs/firebase/firebase";
+import {getPortfolio, writePortfolio} from "../../libs/firebase/firebase";
+import {useQuery} from "react-query";
 
 
 const PortfolioWrite = () => {
   const [products, setProducts] = useState({});
+  const {isLoading, error, data} = useQuery(["portfolio"],getPortfolio);
+
   const thumbRef = useRef(null);
 
   const handelChange = e =>{
@@ -28,6 +31,7 @@ const PortfolioWrite = () => {
         ACL: 'public-read', // 설정에 따라 이미지를 공개로 설정할 수 있습니다.
       };
 
+
       s3.upload(params, (err, data)=>{
         if(err){
           console.error(err)
@@ -41,17 +45,6 @@ const PortfolioWrite = () => {
       return false;
     }
 
-    if(name === "skill"){
-      const valueSplit = value.split(', ');
-
-      setProducts({
-        ...products,
-        [name] : valueSplit,
-      })
-
-      return false;
-    }
-
     setProducts({
       ...products,
       [name] : value,
@@ -59,7 +52,32 @@ const PortfolioWrite = () => {
   }
 
   const handelSubmit = () => {
-    writePortfolio(products)
+
+    const imgW = thumbRef.current?.clientWidth;
+    const imgH = thumbRef.current?.clientHeight;
+
+    let product;
+    if(imgW - imgH > 80) {
+      product = {
+        ...products,
+        thumbWidth : true
+      }
+    }else{
+      product = {
+        ...products,
+        thumbWidth : false
+      }
+    }
+
+    if(products?.skill){
+      const splitSkill = products?.skill.split(",");
+      product = {
+        ...product,
+        skill:splitSkill
+      }
+    }
+
+    writePortfolio(product, data.length)
       .then(()=>{
         alert("제품이 등록되 었습니다.");
         window.location.reload();
@@ -95,13 +113,12 @@ const PortfolioWrite = () => {
           <li>
             <p className="label-tt">프로잭트 썸네일</p>
             <label className={products?.thumb ? "thumb" : "thumb-box"} htmlFor="thumb" >
-              {products?.thumb && <img src={products.thumb} alt=""/>}
+              {products?.thumb && <img src={products.thumb} ref={thumbRef} alt=""/>}
             </label>
             <input
               type="file"
               id="thumb"
               name='thumb'
-              ref={thumbRef}
               placeholder="프로젝트 썸네일"
               onChange={handelChange}
               className="input-file"

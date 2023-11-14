@@ -20,7 +20,7 @@
   }
 }
 @mixin setMidea($minWidth, $maxWidth){
-  @media (max-width: $minWidth) and (max-width: $maxWidth) {
+  @media (min-width: $minWidth) and (max-width: $maxWidth) {
     @content
   }
 }

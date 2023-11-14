@@ -1,7 +1,8 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import {useNavigate} from "react-router-dom";
 
-const ThumbNailList = ({data}) => {
+const TextList = ({data}) => {
+
 
   const navigate = useNavigate();
   const handelClick = (id, data)=>{
@@ -10,20 +11,15 @@ const ThumbNailList = ({data}) => {
 
   const skills = (skill)=>{
     return skill.map((item)=>{
-       return <span key={item} className="skill-item">#{item}</span>
+      return <span key={item} className="skill-item">#{item}</span>
     })
   }
-
   return (
     <>
       {
         data.map((item)=>{
-          const {id, thumb, name, day, skill, thumbWidth} = item;
-
-          return <li key={id} onClick={()=>handelClick(id, item)}>
-            <div className="img-thumbnail">
-              <img src={thumb} alt="" className={thumbWidth ? "width-img" : null}  />
-            </div>
+          const {id, name, day, skill, thumbWidth} = item;
+          return <li className="text-list" key={id} onClick={()=>handelClick(id, item)}>
             <div className="prj-info">
               <div className="prj-info-hd">
                 <p className="name">{name}</p>
@@ -34,9 +30,9 @@ const ThumbNailList = ({data}) => {
           </li>
         })
       }
-
     </>
-  )
+
+  );
 };
 
-export default ThumbNailList;
+export default TextList;

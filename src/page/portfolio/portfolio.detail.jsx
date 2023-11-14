@@ -18,7 +18,9 @@ const PortfolioDetail = () => {
 
   const textarea = (text, type)=>{
     const enter = text.split("\n");
+
     return enter.map((item, idx)=>{
+      if(item.length < 1) return false;
       return <li key={idx}><span className="extra-num">{idx + 1}.</span> <span className="text">{item}</span></li>
     })
   }
@@ -28,10 +30,10 @@ const PortfolioDetail = () => {
   }
 
   return (
-    <div className="detail-wrap">
-      <div className="thumbnail">
+    <div className={thumb ? "detail-wrap" : "detail-wrap center"}>
+      {thumb && <div className="thumbnail">
         <img src={thumb} alt={name} />
-      </div>
+      </div>}
       <div className="detail-info">
         <h2 className="title">{name}<span className="company">({company})</span></h2>
         <p className="day">{day}</p>

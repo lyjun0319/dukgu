@@ -15,11 +15,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-export async function writePortfolio(products) {
-  const id = uuid();
+export async function writePortfolio(products, count) {
+  const id = String(count+2);
 
   await set(ref(database, `portfolio/${id}`), {
-    id,
+    id : count + 2,
     ...products,
   });
 }

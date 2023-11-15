@@ -4,12 +4,11 @@ import App from './App';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "react-query";
 
-import "./libs/styles/style.scss"
+// import "./libs/styles/style.scss"
 import Portfolio from "./page/portfolio/portfolio";
 import Main from "./page/main";
 import My from "./page/my/my";
 import PortfolioWrite from "./page/portfolio/portfolio.write";
-import isAdmin from "./components/auth/isAdmin";
 import IsAdmin from "./components/auth/isAdmin";
 import PortfolioDetail from "./page/portfolio/portfolio.detail";
 

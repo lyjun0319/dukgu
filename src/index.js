@@ -4,7 +4,7 @@ import App from './App';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "react-query";
 
-// import "./libs/styles/style.scss"
+import "./libs/styles/style.scss"
 import Portfolio from "./page/portfolio/portfolio";
 import Main from "./page/main";
 import My from "./page/my/my";

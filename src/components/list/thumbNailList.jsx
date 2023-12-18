@@ -13,29 +13,21 @@ const ThumbNailList = ({data}) => {
        return <span key={item} className="skill-item">#{item}</span>
     })
   }
+  const {id, thumb, name, day, skill, thumbWidth} = data;
 
   return (
-    <>
-      {
-        data.map((item)=>{
-          const {id, thumb, name, day, skill, thumbWidth} = item;
-
-          return <li key={id} onClick={()=>handelClick(id, item)}>
-            <div className="img-thumbnail">
-              <img src={thumb} alt="" className={thumbWidth ? "width-img" : null}  />
-            </div>
-            <div className="prj-info">
-              <div className="prj-info-hd">
-                <p className="name">{name}</p>
-                <p className="day">{day}</p>
-              </div>
-              <div className="skill">{skills(skill)}</div>
-            </div>
-          </li>
-        })
-      }
-
-    </>
+    <li key={id} onClick={()=>handelClick(id, data)}>
+      <div className="img-thumbnail">
+        <img src={thumb} alt="" className={thumbWidth ? "width-img" : null}  />
+      </div>
+      <div className="prj-info">
+        <div className="prj-info-hd">
+          <p className="name">{name}</p>
+          <p className="day">{day}</p>
+        </div>
+        <div className="skill">{skills(skill)}</div>
+      </div>
+    </li>
   )
 };
 

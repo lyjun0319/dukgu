@@ -1,5 +1,6 @@
 .portfolio-wrap {
 
+  display: flex;
   @include desktop{
     padding:30px;
   }
@@ -11,74 +12,78 @@
   @include mobile{
     padding:15px;
   }
+
+  .portfolio-colum {
+    &.colum-5{
+      width:18.4%;
+      margin-right: 2%;
+
+      &:nth-child(5n){
+        margin-right:0;
+      }
+    }
+
+    &.colum-3 {
+      width:32%;
+      margin-right:2%;
+
+      &:nth-child(5n){
+        margin-right: 0;
+      }
+
+      &:nth-child(3n){
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 // portfolio - list
 .portfolio-list{
-  display: flex;
-  flex-wrap: wrap;
 
   li {
-    margin-right:2%;
     padding-bottom:20px;
     cursor: pointer;
 
     &.text-list{
       margin-bottom:20px;
       padding:20px 15px;
-      border:1px solid #333;
       border-radius: 5px;
+
+      &.bgColor1{
+        background: linear-gradient(45deg, #222, #585858);
+      }
+
+      &.bgColor2{
+        background: linear-gradient(45deg, #0C002F, #00237C);
+      }
+
+      &.bgColor3{
+        background: linear-gradient(45deg, #007C05, #002F07);
+      }
+
+      &.bgColor4{
+        background: linear-gradient(45deg, #480000, #C90000);
+      }
+
+      &.bgColor5{
+        background: linear-gradient(45deg , #230827, #A05CB8);
+      }
 
       .prj-info{
         padding-top:0;
       }
     }
 
-    @include desktop{
-      width:18.4%;
-
-      &:nth-child(5n){
-        margin-right: 0;
-      }
-
-    }
-
-    @include tablet{
-      width:32%;
-
-      &:nth-child(5n){
-        margin-right: 2%;
-      }
-
-      &:nth-child(3n){
-        margin-right: 0;
-      }
-    }
-
-    @include mobile{
-      width: 100%;
-      padding-bottom:20px;
-      margin-right:0;
-      &:nth-child(3n){
-        margin-right: 0;
-      }
-    }
-
     .img-thumbnail{
-      position:relative;
-      padding-top:99%;
-      overflow: hidden;
       border:1px solid #333;
       background: #fff;
 
       img {
-        position: absolute;
-        top:0;
-        left:0;
 
         &.width-img{
           max-width:unset;
-          max-height: 100%;
+          width: 100%;
         }
       }
     }

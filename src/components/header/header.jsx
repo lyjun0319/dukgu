@@ -17,7 +17,7 @@ const Header = () => {
         {/*<NavLink to="/my" className="nav-list">Intro</NavLink>*/}
         {/*<NavLink to="/portfolio" className="nav-list">PortFolio</NavLink>*/}
         {user && <User user={user} logout={logout} />}
-        {!user && <button type="button" className="btn-login" onClick={login}>Login</button> }
+        {!user && <button type="button" className="nav-list btn-login" onClick={login}>Login</button> }
       </nav>
     </header>
   );

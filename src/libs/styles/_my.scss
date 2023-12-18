@@ -1,0 +1,27 @@
+.my-wrap {
+  height:2700px;
+  .text-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    font-size: 100px;
+    color:#fff;
+    text-align:center;
+    background: #000;
+
+    .title{
+      font-size:100px;
+      font-weight:bold;
+    }
+  }
+
+  p {
+    font-size:16px;
+    color:#efefef;
+    line-height: 1.5;
+  }
+}

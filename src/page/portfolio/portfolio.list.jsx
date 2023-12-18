@@ -1,23 +1,95 @@
-import React from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import ThumbNailList from "../../components/list/thumbNailList";
 import TextList from "../../components/list/textList";
 
 const PortfolioList = ({data}) => {
 
-  const thumbData = data.filter((item)=> item.hasOwnProperty("thumb"));
-  const notThumbData = data.filter((item) => item.thumb === undefined || item.thumb === null);
+  const [agentType, setAgentType] = useState({
+    type: "",
+    colum:0,
+  });
 
-  return (
-    <>
-      <ul className="portfolio-list">
-        <ThumbNailList data={thumbData} />
-      </ul>
+  const handleResize = () => {
+    const winW = window.innerWidth;
+    if(winW > 1024 && agentType.type !== "pc"){
+      setAgentType({
+        type: "pc",
+        colum:5
+      });
+    }
 
-      <ul className="portfolio-list">
-        <TextList data ={notThumbData} />
-      </ul>
-    </>
+    if(winW < 1024 && winW > 768 && agentType.type !== "ipad"){
+      setAgentType({
+        type: "ipad",
+        colum:3
+      });
+    }
+
+    if(winW < 768 && agentType.type !== "mobile"){
+      setAgentType({
+        type: "mobile",
+        colum:1
+      });
+    }
+  }
+
+  const handleAgentType = ()=>{
+
+    const winW = window.innerWidth;
+
+    if(winW > 1024 ){
+      setAgentType({
+        type: "pc",
+        colum: 5
+      });
+    }
+
+    if(winW < 1024 && winW > 768 ){
+      setAgentType({
+        type: "ipad",
+        colum: 3
+      });
+    }
+
+    if(winW < 768){
+      setAgentType({
+        type: "mobile",
+        colum: 1
+      });
+    }
+  }
+
+  useEffect(() => {
+    handleAgentType();
+    window.addEventListener("resize", handleResize, false);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [agentType.type]);
+
+
+  if(agentType.colum === 0) return false;
+
+  const columns = Array.from({ length: agentType.colum }, (_, columnIndex) =>
+    data.filter((item, key) => columnIndex === key % agentType.colum)
   );
+
+  return <>
+    {
+      Array.from({ length: agentType.colum }).map((_, columnIndex) => (
+        <div className={`portfolio-colum colum-${agentType.colum}`} key={columnIndex}>
+          <ul className="portfolio-list">
+            {columns[columnIndex].map((item, key) => (
+              <Fragment key={key}>
+                {item.thumb ? <ThumbNailList data={item} /> : <TextList data={item} />}
+              </Fragment>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </>
 };
 
 export default PortfolioList;

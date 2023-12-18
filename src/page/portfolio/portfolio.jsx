@@ -28,10 +28,12 @@ const Portfolio = () => {
       {isLoading && <p>로딩중...</p>}
       {error && <p>{error}</p>}
       {data &&
+        <>
         <div className="portfolio-wrap">
-          <button type="button" className="btn-write" onClick={writeBtn}>글쓰기</button>
           <PortfolioList data={data}/>
         </div>
+          <button type="button" className="btn-write" onClick={writeBtn}>글쓰기</button>
+        </>
       }
     </>
 

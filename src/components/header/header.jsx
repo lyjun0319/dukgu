@@ -14,7 +14,7 @@ const Header = () => {
       <h1 id="logo">
         <Link to="/">Dukgu's</Link></h1>
       <nav id="nav">
-        {/*<NavLink to="/my" className="nav-list">Intro</NavLink>*/}
+        <NavLink to="/my" className="nav-list">Intro</NavLink>
         {/*<NavLink to="/portfolio" className="nav-list">PortFolio</NavLink>*/}
         {user && <User user={user} logout={logout} />}
         {!user && <button type="button" className="nav-list btn-login" onClick={login}>Login</button> }

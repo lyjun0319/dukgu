@@ -50,7 +50,10 @@ const PortfolioList = ({data}) => {
       });
     }
 
-    if(winW > 1024  && winW < 1920){
+    console.log(winW);
+
+    if(winW > 1024  && winW < 1921){
+      console.log("pc")
       setAgentType({
         type: "pc",
         colum: 5
@@ -73,6 +76,7 @@ const PortfolioList = ({data}) => {
   }
 
   useEffect(() => {
+
     handleAgentType();
     window.addEventListener("resize", handleResize, false);
 
@@ -82,8 +86,12 @@ const PortfolioList = ({data}) => {
   }, [agentType.type]);
 
 
+  console.log(data);
+
+  console.log(agentType)
   if(agentType.colum === 0) return false;
 
+  console.log("aa")
   const columns = Array.from({ length: agentType.colum }, (_, columnIndex) =>
     data.filter((item, key) => columnIndex === key % agentType.colum)
   );

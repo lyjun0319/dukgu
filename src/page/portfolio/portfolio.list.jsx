@@ -11,7 +11,14 @@ const PortfolioList = ({data}) => {
 
   const handleResize = () => {
     const winW = window.innerWidth;
-    if(winW > 1024 && agentType.type !== "pc"){
+    if(winW > 1920 && agentType.type !== "uhdpc"){
+      setAgentType({
+        type: "uhdpc",
+        colum: 7
+      });
+    }
+
+    if(winW > 1024  && winW < 1920 && agentType.type !== "pc"){
       setAgentType({
         type: "pc",
         colum:5
@@ -36,8 +43,14 @@ const PortfolioList = ({data}) => {
   const handleAgentType = ()=>{
 
     const winW = window.innerWidth;
+    if(winW > 1920 ){
+      setAgentType({
+        type: "uhdpc",
+        colum: 7
+      });
+    }
 
-    if(winW > 1024 ){
+    if(winW > 1024  && winW < 1920){
       setAgentType({
         type: "pc",
         colum: 5

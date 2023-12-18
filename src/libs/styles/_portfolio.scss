@@ -14,9 +14,20 @@
   }
 
   .portfolio-colum {
+    &.colum-7 {
+      width:12.571%;
+      margin-right: 2%;
+      &:nth-child(7n){
+        margin-right:0;
+      }
+    }
     &.colum-5{
       width:18.4%;
       margin-right: 2%;
+
+      &:nth-child(7n){
+        margin-right:0;
+      }
 
       &:nth-child(5n){
         margin-right:0;
@@ -80,11 +91,7 @@
       background: #fff;
 
       img {
-
-        &.width-img{
-          max-width:unset;
-          width: 100%;
-        }
+       width:100%;
       }
     }
 

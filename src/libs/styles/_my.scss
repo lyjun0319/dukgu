@@ -1,5 +1,6 @@
 .my-wrap {
-  height:2700px;
+  height:4800px;
+
   .text-box {
     display: flex;
     align-items: center;
@@ -9,13 +10,36 @@
     width: 100vw;
     height: 100vh;
     font-size: 100px;
-    color:#fff;
-    text-align:center;
+    color: #fff;
+    text-align: center;
     background: #000;
 
+    .text-box-inr {
+      position: fixed;
+      width: 100%;
+
+      @include mobile {
+        padding: 0 20px;
+      }
+    }
     .title{
       font-size:100px;
       font-weight:bold;
+      @include mobile{
+        font-size:50px;
+      }
+    }
+  }
+
+  .scroll-text{
+    padding: 0 30px;
+
+    .scroll-down {
+      font-size:12px;
+      animation: gradientText 3s infinite;
+    }
+    @include mobile {
+      font-size:50px;
     }
   }
 
@@ -23,5 +47,23 @@
     font-size:16px;
     color:#efefef;
     line-height: 1.5;
+
+    @include mobile {
+      font-size:15px;
+    }
+  }
+}
+
+@keyframes gradientText {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

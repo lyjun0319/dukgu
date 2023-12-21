@@ -52,7 +52,48 @@
       font-size:15px;
     }
   }
+
+  .history-list{
+    max-width: 1024px;
+    margin:0 auto;
+
+    @include tablet{
+      padding:0 20px;
+    }
+
+    ul{
+      display: flex;
+      flex-wrap: wrap;
+
+      li{
+        width:33.333333%;
+        padding:15px 30px;
+        border:1px solid #333;
+        text-align: left;
+
+        @include mobile {
+          width: 100%;
+          font-size:15px;
+        }
+        .history-hd{
+          .company-name{
+            font-size:16px;
+            font-weight:bold;
+          }
+          .day{
+            font-size:14px;
+          }
+        }
+        .his-hash{
+          font-size:14px;
+          color:#6495ed;
+        }
+      }
+    }
+  }
+
 }
+
 
 @keyframes gradientText {
   0% {

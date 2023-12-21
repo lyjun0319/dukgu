@@ -2,15 +2,15 @@
 
   display: flex;
   @include desktop{
-    padding:30px;
+    padding:80px 30px 30px;
   }
 
   @include tablet{
-    padding:20px;
+    padding:80px 20px 20px;
   }
 
   @include mobile{
-    padding:15px;
+    padding:80px 15px 15px;
   }
 
   .portfolio-colum {
@@ -203,7 +203,7 @@
   display: flex;
   max-width:1024px;
   margin:0 auto;
-  padding:30px;
+  padding:90px 30px 30px;
 
   &.center{
     justify-content: center;
